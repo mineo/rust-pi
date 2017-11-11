@@ -10,7 +10,7 @@ use std::time::Duration;
 static PINS: [u8; 6] = [13, 19, 26, 21, 20, 16];
 static HOWLONG: u64 = 100;
 
-struct RaspberryGpio {
+pub struct RaspberryGpio {
     gpio: Gpio,
     sleep_duration: Duration,
     pins: Vec<u8>,
@@ -33,20 +33,24 @@ impl RaspberryGpio {
         sleep(self.sleep_duration);
     }
 
+    // Turn off `pin`.
     fn off(&self, pin: u8) {
         self.gpio.write(pin, Level::Low);
     }
 
+    // Turn off all `pins`.
     fn off_slice(&self, pins: &[u8]) {
         for &pin in pins {
             self.off(pin);
         }
     }
 
+    // Turn on `pin`.
     fn on(&self, pin: u8) {
         self.gpio.write(pin, Level::High);
     }
 
+    // Turn on all `pins`.
     fn on_slice(&self, pins: &[u8]) {
         for &pin in pins {
             self.on(pin);
