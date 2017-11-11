@@ -111,6 +111,14 @@ impl RaspberryGpio {
     }
 }
 
+pub fn demo(gpio: Gpio, pins: Vec<u8>) {
+    let rgpio = RaspberryGpio::new(gpio, Duration::from_millis(HOWLONG), pins);
+    rgpio.cycle();
+    rgpio.flash();
+    rgpio.trail();
+    rgpio.cross();
+}
+
 fn main() {
     let info = DeviceInfo::new().expect("Couldn't get device info");
     println!("Model: {} (SoC: {})", info.model(), info.soc());
@@ -122,12 +130,7 @@ fn main() {
         pins.extend(PINS.iter().cloned());
     }
 
-    let rgpio = RaspberryGpio::new(gpio, Duration::from_millis(HOWLONG), pins);
-
     sleep(Duration::from_secs(5));
 
-    rgpio.cycle();
-    rgpio.flash();
-    rgpio.trail();
-    rgpio.cross();
+    demo(gpio, pins);
 }
