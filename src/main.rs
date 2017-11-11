@@ -119,10 +119,14 @@ pub fn demo(gpio: Gpio, pins: Vec<u8>) {
     rgpio.cross();
 }
 
-fn main() {
+pub fn info() {
     let info = DeviceInfo::new().expect("Couldn't get device info");
     println!("Model: {} (SoC: {})", info.model(), info.soc());
 
+}
+
+fn main() {
+    info();
     let gpio = Gpio::new().expect("Couldn't get gpio");
     let mut pins = PINS.to_vec();
 
